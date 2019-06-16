@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyWordList</string>
+    <string name="menu_add">Add New Word</string>
+
+</resources>
