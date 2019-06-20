@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">MyWordList</string>
     <string name="menu_add">Add New Word</string>
+    <string name="add_hint">Enter the word you want to search for</string>
 
+    <string name="new_list_key">new_list</string>
+    <string name="done_bt_title">Done</string>
+    <string name="def_hint">Enter the definition of the word</string>
 </resources>

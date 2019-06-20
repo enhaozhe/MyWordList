@@ -1,11 +1,15 @@
 package com.eazy.mywordlist;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,14 +43,12 @@ public class newFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mList = new ArrayList<>();
-
-        mList.add(new Word("Word", "a single distinct meaningful element of speech or writing, used with others (or sometimes alone) to form a sentence and typically shown with a space on either side when written or printed."));
-        mList.add(new Word("aws", "asf"));
-        mList.add(new Word("awa", "asf"));
-        mList.add(new Word("awd", "asf"));
-        mList.add(new Word("awb", "asf"));
-        mList.add(new Word("awc", "asf"));
+        if (getArguments() != null) {
+            mList = (List<Word>) getArguments().getSerializable("getNewList");
+        }else{
+            mList = new ArrayList<>();
+            Log.d("Failed", "gg");
+        }
 
     }
 

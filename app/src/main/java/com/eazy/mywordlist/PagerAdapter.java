@@ -7,18 +7,24 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class PagerAdapter extends FragmentPagerAdapter {
 
     private int numOfTabs;
+    private newFragment newFragment;
+    private famFragment famFragment;
+    private knownFragment knownFragment;
 
-    public PagerAdapter(FragmentManager fm, int numOfTabs) {
+    public PagerAdapter(FragmentManager fm, int numOfTabs, newFragment nf, famFragment ff, knownFragment kf) {
         super(fm);
         this.numOfTabs = numOfTabs;
+        newFragment = nf;
+        famFragment = ff;
+        knownFragment = kf;
     }
 
     @Override
     public Fragment getItem(int i) {
         switch (i){
-            case 0: return new newFragment();
-            case 1: return new famFragment();
-            case 2: return new knownFragment();
+            case 0: return newFragment;
+            case 1: return famFragment;
+            case 2: return knownFragment;
             default: return null;
         }
 

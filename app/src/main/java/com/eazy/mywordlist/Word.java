@@ -1,9 +1,11 @@
 package com.eazy.mywordlist;
 
-public class Word {
+import java.io.Serializable;
 
-    String word;
-    String def;
+public class Word implements Serializable {
+
+    private String word;
+    private String def;
 
     public Word(String word, String def) {
         this.word = word;
