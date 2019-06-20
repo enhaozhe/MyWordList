@@ -24,7 +24,7 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        mDatabaseHelper = getIntent().getParcelableExtra("DatabaseHelper");
+        mDatabaseHelper = new DatabaseHelper(this);
 
         autoCompleteTextView = findViewById(R.id.word_tv);
         editText = findViewById(R.id.def_et);

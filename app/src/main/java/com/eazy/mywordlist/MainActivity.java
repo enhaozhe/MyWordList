@@ -85,8 +85,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.add_button:
                 Log.d(LOG_TAG, "Button clicked!");
                 Intent intent = new Intent(this, AddActivity.class);
-                intent.putExtra("DatabaseHelper", (Parcelable) mDatabaseHelper);
-                startActivityForResult(intent, 1);
+                startActivity(intent);
+               /* intent.putExtra("DatabaseHelper", (Parcelable) mDatabaseHelper);
+                startActivityForResult(intent, 1);*/
                 return true;
         }
         return false;
