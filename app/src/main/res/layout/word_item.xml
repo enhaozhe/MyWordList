@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <TextView
-        android:id="@+id/word_tv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="test"
-        android:textSize="28sp"/>
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/def_tv"
-        android:layout_width="match_parent"
-        android:layout_height="18sp"
-        android:text="definition"
-        />
+        <TextView
+            android:id="@+id/word_tv"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:autoSizeTextType="uniform"
+            android:maxLines="1"/>
+
+        <TextView
+            android:id="@+id/def_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
+
+        <TextView
+            android:id="@+id/translation_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
 </LinearLayout>
