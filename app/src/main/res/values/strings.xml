@@ -6,4 +6,5 @@
     <string name="new_list_key">new_list</string>
     <string name="done_bt_title">Done</string>
     <string name="def_hint">Enter the definition of the word</string>
+    <string name="get_def_bt">Get Definition</string>
 </resources>

@@ -18,5 +18,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
-        android:hint="@string/def_hint"/>
+        android:hint="@string/def_hint"
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/get_def_bt"
+        android:onClick="GetDefinition"/>
+
 </LinearLayout>
