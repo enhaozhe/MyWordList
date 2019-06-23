@@ -1,7 +1,10 @@
 package com.eazy.mywordlist;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.os.AsyncTask;
+import android.widget.Toolbar;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -33,10 +37,10 @@ public class AddActivity extends AppCompatActivity {
     public static final int TEXT_REQUEST = 1;
     private DatabaseHelper mDatabaseHelper;
     private String myUrl;
-    private String[] transList;
-    private Spinner spinner;
-    private Button translate;
-    private Map<String, String> lanMap;
+    //private String[] transList;
+    //private Spinner spinner;
+    //private Button translate;
+    //private Map<String, String> lanMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +51,8 @@ public class AddActivity extends AppCompatActivity {
 
         autoCompleteTextView = findViewById(R.id.word_tv);
         def_tv = findViewById(R.id.def_et);
-        translation_et = findViewById(R.id.trans_et);
-        spinner = findViewById(R.id.trans_spinner);
-        translate = findViewById(R.id.trans_bt);
 
-
+        /*
         lanMap = new HashMap<>();
         lanMap.put("Select a Language", "-1");
         lanMap.put("German", "de");
@@ -72,16 +73,9 @@ public class AddActivity extends AppCompatActivity {
 
         transList = new String[]{"Select a Language" , "German","Greek","Indonesian","isiXhosa","isiZulu", "Northern Sotho", "Malay", "Portuguese", "Romanian","Setswana", "Spanish",
                 "Tajik", "Tatar", "Tok Pisin", "Turkmen"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, transList);
-        spinner.setAdapter(adapter);
 
-        translate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String input = autoCompleteTextView.getText().toString();
-                GetTranslation();
-            }
-        });
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, transList);
+        spinner.setAdapter(adapter);*/
 
     }
 
@@ -131,56 +125,5 @@ public class AddActivity extends AppCompatActivity {
         MyDictionaryRequest myDictionaryRequest = new MyDictionaryRequest(this, def_tv);
         myDictionaryRequest.execute(myUrl);
         Log.d("TAG... Get definition: ", "Succeed!");
-    }
-
-    public void GetTranslation(){
-        final String input = autoCompleteTextView.getText().toString();
-        final String fields = "definitions";
-        final String language = "en/id";
-        final String strictMatch = "false";
-        final String word_id = input.toLowerCase();
-        String url =  "https://od-api.oxforddictionaries.com/api/v2/translations/" + language + "/" + word_id;
-
-        MyDictionaryRequest myDictionaryRequest = new MyDictionaryRequest(this, translation_et);
-        myDictionaryRequest.execute(url);
-        Log.d("TAG...Get Translation: ", url);
-        Log.d("TAG...Get Translation: ", "Succeed!");
-    }
-
-    private String getLanguage() {
-        final String[] key = new String[1];
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                key[0] = (String) parent.getItemAtPosition(position);
-                }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-        });
-        Log.d("TAG...Get Translation: ",lanMap.get(key[0]) );
-
-        return lanMap.get(key[0]);
-    }
-
-    public static boolean check_for_word(String word) {
-        // System.out.println(word);
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(
-                    "/usr/share/dict/american-english"));
-            String str;
-            while ((str = in.readLine()) != null) {
-                if (str.indexOf(word) != -1) {
-                    return true;
-                }
-            }
-            in.close();
-        } catch (IOException e) {
-        }
-
-        return false;
     }
 }

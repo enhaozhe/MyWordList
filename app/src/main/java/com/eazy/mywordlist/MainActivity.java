@@ -35,16 +35,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Intent mIntent = getIntent();
-        //String[] receiveM = mIntent.getStringArrayExtra(AddActivity.EXTRA_MESSAGE);
-
         mDatabaseHelper = new DatabaseHelper(this);
 
         newList = new ArrayList<>();
-        /*
-        if(receiveM != null) {
-            newList.add(new Word(receiveM[0], receiveM[1]));
-        }*/
 
         Cursor data = mDatabaseHelper.getData();
         while(data.moveToNext()){
@@ -83,12 +76,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.add_button:
-                Log.d(LOG_TAG, "Button clicked!");
+                Log.d(LOG_TAG, "Add Button clicked!");
                 Intent intent = new Intent(this, AddActivity.class);
                 startActivity(intent);
                /* intent.putExtra("DatabaseHelper", (Parcelable) mDatabaseHelper);
                 startActivityForResult(intent, 1);*/
                 return true;
+            case R.id.delete_button:
+                Log.d(LOG_TAG, "Delete Button clicked!");
+
         }
         return false;
     }

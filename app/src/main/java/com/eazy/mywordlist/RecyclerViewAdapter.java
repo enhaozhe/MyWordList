@@ -32,6 +32,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         myViewHolder.word.setText(wordList.get(i).getWord());
         myViewHolder.def.setText(wordList.get(i).getDef());
+
+        //Todo: Set onClick listener to bring up a card view and long press to enable delete mode.
+        /*
+        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
     }
 
     @Override

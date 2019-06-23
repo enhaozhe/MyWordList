@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ public class newFragment extends Fragment {
     private View v;
     private RecyclerView recyclerView;
     private List<Word> mList;
+    private DatabaseHelper mDatabaseHelper;
+    private RecyclerViewAdapter mAdapter;
 
     public newFragment() {
     }
@@ -32,7 +35,7 @@ public class newFragment extends Fragment {
         v = inflater.inflate(R.layout.new_fragment, container, false);
 
         recyclerView = v.findViewById(R.id.recyclerView);
-        RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(mList, getContext());
+        mAdapter = new RecyclerViewAdapter(mList, getContext());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 

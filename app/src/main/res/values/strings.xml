@@ -5,7 +5,8 @@
 
     <string name="new_list_key">new_list</string>
     <string name="done_bt_title">Done</string>
-    <string name="def_hint">Enter the definition of the word</string>
+    <string name="def_hint">Click Search or enter the definition of the word</string>
     <string name="get_def_bt">Get Definition</string>
-    <string name="trans_hint">Enter translation or click translate button</string>
+    <string name="trans_hint">Click Search or enter translation or click translate button</string>
+    <string name="delete_menu_bt">Delete</string>
 </resources>
