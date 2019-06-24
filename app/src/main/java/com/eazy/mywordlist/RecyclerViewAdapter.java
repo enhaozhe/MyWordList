@@ -69,11 +69,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             int position = getAdapterPosition();
             if(mainActivity.getStatus()){
                 mainActivity.preDelete(v, position);
-                Toast.makeText(mainActivity, "Delete!", Toast.LENGTH_SHORT).show();
 
             }else{
                 //Todo: Open the edit mode
-                Toast.makeText(mainActivity, "Fail!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mainActivity, "Edit!", Toast.LENGTH_SHORT).show();
 
             }
         }

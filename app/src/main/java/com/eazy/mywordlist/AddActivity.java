@@ -96,7 +96,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void AddData(String word, String def){
-        int result = mDatabaseHelper.addData(word, def);
+        int result = mDatabaseHelper.addData(word, def, 0);  //could ask user to choose which list to add to, default new
 
         if(result == 0){
             Toast.makeText(this, "Word is added successfully!", Toast.LENGTH_SHORT).show();

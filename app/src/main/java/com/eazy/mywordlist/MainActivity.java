@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     private boolean delete_mode_status;
     private int counter;
     private List<Word> delList;
+    private List<List<Word>> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +58,22 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         counter = 0;
 
         newList = new ArrayList<>();
-        famList = new ArrayList<>();
-        knownList = new ArrayList<>();
+        famList =  new ArrayList<>();
+        knownList =  new ArrayList<>();
 
-        Cursor data = mDatabaseHelper.getData();
+        Cursor data = mDatabaseHelper.getData(0);
         while(data.moveToNext()){
             newList.add(new Word(data.getString(0), data.getString(1)));
+        }
+
+        data = mDatabaseHelper.getData(1);
+        while(data.moveToNext()){
+            famList.add(new Word(data.getString(0), data.getString(1)));
+        }
+
+        data = mDatabaseHelper.getData(2);
+        while(data.moveToNext()){
+            knownList.add(new Word(data.getString(0), data.getString(1)));
         }
 
         bundle = new Bundle();
@@ -122,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
                 }
                 counter = 0;
                 num_item_select.setText("My Word List");
+                Toast.makeText(this, "Delete!", Toast.LENGTH_SHORT).show();
                 return true;
 
         }
