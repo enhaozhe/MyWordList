@@ -1,8 +1,5 @@
 package com.eazy.mywordlist;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,7 +32,7 @@ public class newFragment extends Fragment {
         v = inflater.inflate(R.layout.new_fragment, container, false);
 
         recyclerView = v.findViewById(R.id.recyclerView);
-        mAdapter = new RecyclerViewAdapter(mList, getContext());
+        mAdapter = new RecyclerViewAdapter(mList, getContext(), (MainActivity) getContext());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -53,6 +50,10 @@ public class newFragment extends Fragment {
             Log.d("Failed", "gg");
         }
 
+    }
+
+    public void preDelete(){
+        mAdapter.notifyDataSetChanged();
     }
 
 }

@@ -3,10 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/add_done_bt"
-        android:title="@string/done_bt_title"
+        android:id="@+id/del_mode_menu"
+        app:showAsAction="always"
         android:icon="@drawable/ic_add_done_bt"
-        app:showAsAction="always">
-    </item>
-
+        android:title="delete" />
 </menu>

@@ -1,32 +1,18 @@
 package com.eazy.mywordlist;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.util.HashMap;
-import java.util.Map;
-
-import android.os.AsyncTask;
-import android.widget.Toolbar;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -37,6 +23,8 @@ public class AddActivity extends AppCompatActivity {
     public static final int TEXT_REQUEST = 1;
     private DatabaseHelper mDatabaseHelper;
     private String myUrl;
+    private Toolbar toolbar;
+    private TextView title;
     //private String[] transList;
     //private Spinner spinner;
     //private Button translate;
@@ -46,6 +34,13 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        toolbar = findViewById(R.id.toolbar_add);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        title = findViewById(R.id.num_selected_tv);
+        title.setText("Add New Word");
 
         mDatabaseHelper = new DatabaseHelper(this);
 
@@ -82,6 +77,7 @@ public class AddActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.add_done, menu);
+
         return true;
     }
 
@@ -100,13 +96,16 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void AddData(String word, String def){
-        boolean result = mDatabaseHelper.addData(word, def);
+        int result = mDatabaseHelper.addData(word, def);
 
-        if(result){
+        if(result == 0){
             Toast.makeText(this, "Word is added successfully!", Toast.LENGTH_SHORT).show();
-        }else{
+        }else if(result == -2){
             Toast.makeText(this, "Adding word failed!", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "This Word Already Existed!", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private String dictionaryEntries() {

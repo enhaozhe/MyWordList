@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
+
+import java.util.List;
 
 class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -31,8 +34,17 @@ class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(String word, String def){
+    public int addData(String word, String def){
         SQLiteDatabase db = this.getWritableDatabase();
+/*
+        String Query = "Select * from " + TABLE_NAME + " where " + COL0 + " = " + word;
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return -1;
+        }
+        cursor.close();*/
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL0, word);
         contentValues.put(COL1, def);
@@ -42,15 +54,15 @@ class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert(TABLE_NAME, null, contentValues);
 
         if(result == -1 ){
-            return false;
+            return -2;
         }else{
-            return true;
+            return 0;
         }
     }
 
     public void deleteData(Word word){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COL0 + " = " + word.getWord());
+        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COL0 + " = " + "'" + word.getWord() + "'");
         db.close();
     }
 

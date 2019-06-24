@@ -4,8 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddActivity"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar_add"
+        layout="@layout/toolbar_layout" />
 
     <AutoCompleteTextView
         android:id="@+id/word_tv"

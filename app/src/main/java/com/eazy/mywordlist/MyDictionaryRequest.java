@@ -84,7 +84,7 @@ public class MyDictionaryRequest extends AsyncTask<String, Integer, String> {
                 Log.d("TAG...Definition is ", def);
 
             } catch (JSONException ex) {
-                Toast.makeText(context, "Please check your spelling!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Please check your spelling or Internet Connection!", Toast.LENGTH_SHORT).show();
                 Log.d("TAG...Error: ", result);
 
             }

@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <include
+        android:id="@+id/toolbar_main"
+        layout="@layout/toolbar_layout">
+
+    </include>
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
@@ -18,6 +24,7 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/tabLayout" />
+        android:layout_above="@+id/tabLayout"
+        android:layout_below="@id/toolbar_main"/>
 
 </RelativeLayout>
