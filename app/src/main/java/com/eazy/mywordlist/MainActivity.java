@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     private boolean delete_mode_status;
     private int counter;
     private List<Word> delList;
-    private List<List<Word>> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,46 +105,61 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     }
 
     @Override
+    public void onBackPressed() {
+        if(delete_mode_status){
+            quitDeleteMode();
+        }else{
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.add_button:
                 Log.d(LOG_TAG, "Add Button clicked!");
                 Intent intent = new Intent(this, AddActivity.class);
                 startActivity(intent);
-               /* intent.putExtra("DatabaseHelper", (Parcelable) mDatabaseHelper);
-                startActivityForResult(intent, 1);*/
                 return true;
             case R.id.delete_button:
                 Log.d(LOG_TAG, "Delete Button clicked!");
+                onLongClick(this.getCurrentFocus());
                 return true;
             case R.id.del_mode_menu:
-                delete_mode_status = false;
-                toolbar.getMenu().clear();
-                toolbar.inflateMenu(R.menu.add_button);
-                adapter.notifyDataSetChanged();
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-                //Todo: Remove data stored in removedList from database and related lists
+                //Remove data stored in removedList from database and related lists
                 for(Word w : delList){
                     mDatabaseHelper.deleteData(w);
                     newList.remove(w);
                     famList.remove(w);
                     knownList.remove(w);
-                    newFragment.preDelete();
+                    newFragment.preDelete(w);
                 }
-                counter = 0;
-                num_item_select.setText("My Word List");
+                quitDeleteMode();
                 Toast.makeText(this, "Delete!", Toast.LENGTH_SHORT).show();
                 return true;
-
+            case android.R.id.home:
+                quitDeleteMode();
+                return true;
         }
         return false;
     }
 
+    public void quitDeleteMode(){
+        delete_mode_status = false;
+        counter = 0;
+        num_item_select.setText("My Word List");
+        delList.clear();
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.add_button);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ViewGroup viewGroup = findViewById(R.id.recyclerView);
+        for(int i = 0; i < viewGroup.getChildCount(); i++) {
+            viewGroup.getChildAt(i).setBackgroundColor(android.R.drawable.btn_default);  //set all the children to default background color.
+        }
+    }
 
     @Override
     public boolean onLongClick(View v) {
-        //Todo: disable the viewPager once enter delete mode
         delList = new ArrayList<>();
         toolbar.getMenu().clear();
         num_item_select.setText(R.string.nums_items_selected);
@@ -152,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         delete_mode_status = true;
         adapter.notifyDataSetChanged();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         return true;
     }
 

@@ -52,7 +52,8 @@ public class newFragment extends Fragment {
 
     }
 
-    public void preDelete(){
+    public void preDelete(Word word){
+        mList.remove(word);
         mAdapter.notifyDataSetChanged();
     }
 
