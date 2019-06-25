@@ -43,8 +43,11 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     private Toolbar toolbar;
     private TextView num_item_select;
     private boolean delete_mode_status;
+    private boolean view_mode_status;
     private int counter;
     private List<Word> delList;
+    private ViewPager viewPager_card;
+    private CardAdapter adapter_card;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         knownFragment = new knownFragment();
         knownFragment.setArguments(bundle_known);
 
+        view_mode_status = false;
         //implement tabs and pager
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -116,6 +120,8 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     public void onBackPressed() {
         if(delete_mode_status){
             quitDeleteMode();
+        }else if(view_mode_status) {
+            quitViewMode();
         }else{
             super.onBackPressed();
         }
@@ -146,7 +152,11 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
                 Toast.makeText(this, "Delete!", Toast.LENGTH_SHORT).show();
                 return true;
             case android.R.id.home:
-                quitDeleteMode();
+                if(delete_mode_status) {
+                    quitDeleteMode();
+                }else if(view_mode_status){
+                    quitViewMode();
+                }
                 return true;
         }
         return false;
@@ -206,11 +216,45 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         updateSelected();
     }
 
+    public void viewMode(){
+        List<Word> mList = getList(tabLayout.getSelectedTabPosition());
+        adapter_card = new CardAdapter(mList, getApplicationContext());
+        viewPager.setAdapter(adapter_card);
+        viewPager.setPadding(130,0,130,0);
+        view_mode_status = true;
+        toolbar.getMenu().clear();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Todo: add a edit button on toolbar
+    }
+
+    public void quitViewMode(){
+        adapter = new PagerAdapter(getSupportFragmentManager(), 3, newFragment, famFragment, knownFragment);
+        viewPager.setAdapter(adapter);
+        viewPager.setPadding(0,0,0,0);
+        view_mode_status = false;
+        toolbar.inflateMenu(R.menu.add_button);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
     public void updateSelected(){
         num_item_select.setText(counter + " Items Selected");
     }
 
+    public List<Word> getList(int i){
+        switch (i){
+            case 0:
+                return newList;
+            case 1:
+                return famList;
+            case 2:
+                return knownList;
+        default:
+            return  null;
+        }
+    }
     public boolean getStatus(){
         return delete_mode_status;
     }
+
+    public boolean getViewModeStatus() { return view_mode_status;}
 }

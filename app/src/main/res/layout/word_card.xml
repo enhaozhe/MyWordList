@@ -3,14 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="400dp"
+        android:layout_margin="8dp"
         app:cardCornerRadius="20dp"
-        android:layout_margin="8dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -20,31 +26,31 @@
                 android:id="@+id/word_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Word"
-                android:textStyle="bold"
-                android:textSize="18sp"
                 android:gravity="center_horizontal"
-                android:padding="8dp"/>
+                android:padding="8dp"
+                android:text="Word"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/card_def_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/word_title"
+                android:padding="8sp"
                 android:text="Definitions: "
-                android:textStyle="bold"
                 android:textSize="18sp"
-                android:padding="8sp"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/card_def"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
                 android:layout_below="@+id/card_def_tv"
-                android:textSize="18sp"
+                android:inputType="textMultiLine"
+                android:paddingLeft="8sp"
                 android:text="Meaning of the word"
-                android:paddingLeft="8sp"/>
+                android:textSize="18sp" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
