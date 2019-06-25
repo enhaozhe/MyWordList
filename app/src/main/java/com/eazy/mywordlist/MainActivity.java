@@ -30,7 +30,9 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private PagerAdapter adapter;
-    private Bundle bundle;
+    private Bundle bundle_new;
+    private Bundle bundle_fam;
+    private Bundle bundle_known;
     private List<Word> newList;
     private List<Word> famList;
     private List<Word> knownList;
@@ -76,14 +78,20 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             knownList.add(new Word(data.getString(0), data.getString(1)));
         }
 
-        bundle = new Bundle();
-        bundle.putSerializable("getNewList", (Serializable) newList);
+        bundle_new = new Bundle();
+        bundle_new.putSerializable("getNewList", (Serializable) newList);
         newFragment = new newFragment();
-        newFragment.setArguments(bundle);
+        newFragment.setArguments(bundle_new);
 
+        bundle_fam = new Bundle();
+        bundle_fam.putSerializable("getFamList", (Serializable)famList);
         famFragment = new famFragment();
+        famFragment.setArguments(bundle_fam);
 
+        bundle_known = new Bundle();
+        bundle_known.putSerializable("getKnownList", (Serializable)knownList);
         knownFragment = new knownFragment();
+        knownFragment.setArguments(bundle_known);
 
         //implement tabs and pager
         tabLayout = findViewById(R.id.tabLayout);

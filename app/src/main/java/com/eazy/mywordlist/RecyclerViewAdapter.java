@@ -70,7 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             if(mainActivity.getStatus()){
                 mainActivity.preDelete(v, position);
             }else{
-                //Todo: Open the edit mode
+                //Todo: Open the card view
                 Toast.makeText(mainActivity, "Edit!", Toast.LENGTH_SHORT).show();
 
             }

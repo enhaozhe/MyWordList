@@ -10,4 +10,5 @@
     <string name="trans_hint">Click Search or enter translation or click translate button</string>
     <string name="delete_menu_bt">Delete</string>
     <string name="nums_items_selected">0 items selected</string>
+    <string name="close_card">Close Card</string>
 </resources>

@@ -20,7 +20,6 @@ public class newFragment extends Fragment {
     private View v;
     private RecyclerView recyclerView;
     private List<Word> mList;
-    private DatabaseHelper mDatabaseHelper;
     private RecyclerViewAdapter mAdapter;
 
     public newFragment() {
@@ -57,4 +56,5 @@ public class newFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
+    //Todo: remove and add methods for moving words around
 }

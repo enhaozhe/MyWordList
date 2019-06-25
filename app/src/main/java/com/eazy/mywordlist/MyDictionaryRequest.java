@@ -20,6 +20,7 @@ public class MyDictionaryRequest extends AsyncTask<String, Integer, String> {
 
     Context context;
     private EditText def_tv;
+    private EditText audio_tv;
 
     MyDictionaryRequest(Context context, EditText de){
         this.context = context;
@@ -61,6 +62,7 @@ public class MyDictionaryRequest extends AsyncTask<String, Integer, String> {
         super.onPostExecute(result);
 
         String def;
+        String audioFile;
 
             try {
                 JSONObject resultObejct = new JSONObject(result);
@@ -75,13 +77,21 @@ public class MyDictionaryRequest extends AsyncTask<String, Integer, String> {
                 JSONObject sensesObejct = entriesArray.getJSONObject(0);
                 JSONArray sensesArray = sensesObejct.getJSONArray("senses");
 
+                JSONArray pronunciationsArray = entriesObejct.getJSONArray("pronunciations");
+
+                JSONObject audioObject = pronunciationsArray.getJSONObject(0);
+                JSONArray audioArray = audioObject.getJSONArray("phoneticSpelling");
+
+                audioFile = audioArray.getString(0);
+                audio_tv.setText(audioFile);
+/*/
                 JSONObject definitionObejct = sensesArray.getJSONObject(0);
                 JSONArray definitionArray = definitionObejct.getJSONArray("definitions");
 
                 def = definitionArray.getString(0);
 
                 def_tv.setText(def);
-                Log.d("TAG...Definition is ", def);
+                Log.d("TAG...Definition is ", def);*/
 
             } catch (JSONException ex) {
                 Toast.makeText(context, "Please check your spelling or Internet Connection!", Toast.LENGTH_SHORT).show();
