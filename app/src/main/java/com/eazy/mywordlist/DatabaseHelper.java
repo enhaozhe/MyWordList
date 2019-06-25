@@ -63,6 +63,14 @@ class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public int updateData(Word word){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL0, word.getWord());
+        cv.put(COL1,word.getDef());
+        return db.update(TABLE_NAME, cv,  COL0 + " = ?", new String[]{word.getWord()});
+    }
+
     public void deleteData(Word word){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COL0 + " = " + "'" + word.getWord() + "'");

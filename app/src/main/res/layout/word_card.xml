@@ -37,10 +37,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/word_title"
-                android:padding="8sp"
                 android:text="Definitions: "
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingLeft="16dp"/>
 
             <TextView
                 android:id="@+id/card_def"
@@ -48,10 +48,16 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card_def_tv"
                 android:inputType="textMultiLine"
-                android:paddingLeft="8sp"
+                android:paddingLeft="16sp"
                 android:text="Meaning of the word"
                 android:textSize="18sp" />
 
+            <EditText
+                android:id="@+id/edit_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card_def"
+                android:text="test"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,10 +46,12 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     private TextView num_item_select;
     private boolean delete_mode_status;
     private boolean view_mode_status;
+    private boolean edit_mode_status;
     private int counter;
     private List<Word> delList;
-    private ViewPager viewPager_card;
     private CardAdapter adapter_card;
+    private int[] itemLocation;
+    private int currentTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         knownFragment.setArguments(bundle_known);
 
         view_mode_status = false;
+        edit_mode_status = false;
         //implement tabs and pager
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -104,15 +109,55 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         //set icons of tabs
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_new_word);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_fam_word);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_knwon_word);
+        tabsIcon();
+        //Todo: Tab is changing when get into view mode.
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(!view_mode_status) {
+                    currentTab = tab.getPosition();
+                }
+                Log.d("TAG tab changed", String.valueOf(currentTab));
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        //if received from add Activity, create card adapter and scroll to relating position
+        Intent in = getIntent();
+       // Word received = in.getParcelableExtra("edit mode");
+        boolean received = in.getBooleanExtra("edit mode",false);
+
+        if(received){
+           // int i = adapter_card.getItemPosition(received);
+            edit_mode_status = false;
+            itemLocation = in.getIntArrayExtra("back item location");
+            Log.d("TAG Location", String.valueOf(itemLocation[0]));
+            Log.d("TAG Location", String.valueOf(itemLocation[1]));
+
+            TabLayout.Tab t = tabLayout.getTabAt(itemLocation[0]);
+            t.select();
+            //Todo: get correct tab
+            viewMode(itemLocation[1]);
+        }else{
+            currentTab = 0;
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_button, menu);
+        if(view_mode_status){
+            getMenuInflater().inflate(R.menu.edit_mode, menu);
+        }else {
+            getMenuInflater().inflate(R.menu.add_button, menu);
+        }
         return true;
     }
 
@@ -122,6 +167,8 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             quitDeleteMode();
         }else if(view_mode_status) {
             quitViewMode();
+        }else if(edit_mode_status){
+            quitEditMode();
         }else{
             super.onBackPressed();
         }
@@ -155,9 +202,16 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
                 if(delete_mode_status) {
                     quitDeleteMode();
                 }else if(view_mode_status){
-                    quitViewMode();
+                    if(edit_mode_status){
+                        quitEditMode();
+                    }else {
+                        quitViewMode();
+                    }
                 }
                 return true;
+            case R.id.edit_menu:
+                editMode();
+
         }
         return false;
     }
@@ -174,8 +228,10 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         for(int i = 0; i < viewGroup.getChildCount(); i++) {
             viewGroup.getChildAt(i).setBackgroundColor(android.R.drawable.btn_default);  //set all the children to default background color.
         }
+        tabsIcon();
     }
 
+    //Enter delete mode.
     @Override
     public boolean onLongClick(View v) {
         delList = new ArrayList<>();
@@ -185,9 +241,9 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         delete_mode_status = true;
         adapter.notifyDataSetChanged();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tabsIcon();
         return true;
     }
-
 
     //Use the same database but store them in different arrays
     public void preDelete(View v, int position){
@@ -216,15 +272,16 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         updateSelected();
     }
 
-    public void viewMode(){
+    public void viewMode(int position){
         List<Word> mList = getList(tabLayout.getSelectedTabPosition());
         adapter_card = new CardAdapter(mList, getApplicationContext());
         viewPager.setAdapter(adapter_card);
         viewPager.setPadding(130,0,130,0);
         view_mode_status = true;
         toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.edit_mode);
+        viewPager.setCurrentItem(position, true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //Todo: add a edit button on toolbar
     }
 
     public void quitViewMode(){
@@ -232,8 +289,33 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         viewPager.setAdapter(adapter);
         viewPager.setPadding(0,0,0,0);
         view_mode_status = false;
+        toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.add_button);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        tabsIcon();
+    }
+
+    public void editMode(){
+       // view_mode_status = false;
+        edit_mode_status = true;
+        Intent intent = new Intent(this, AddActivity.class);
+        Word word = adapter_card.getmList().get(viewPager.getCurrentItem());
+        String[] l = {word.getWord(), word.getDef()};
+        intent.putExtra("secret code", l);
+        itemLocation = new int[2];
+        itemLocation[0] = currentTab;
+        itemLocation[1] = viewPager.getCurrentItem();
+        Log.d("TAG Ori tab Location", String.valueOf(itemLocation[0]));
+        Log.d("TAG Ori list Location", String.valueOf(itemLocation[1]));
+        intent.putExtra("item location", itemLocation);
+        startActivity(intent);
+    }
+
+    public void quitEditMode(){
+        view_mode_status = true;
+        edit_mode_status = false;
+        num_item_select.setText("My Word List");
+        tabsIcon();
     }
 
     public void updateSelected(){
@@ -252,9 +334,16 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             return  null;
         }
     }
+
     public boolean getStatus(){
         return delete_mode_status;
     }
 
     public boolean getViewModeStatus() { return view_mode_status;}
+
+    public void tabsIcon(){
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_new_word);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_fam_word);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_knwon_word);
+    }
 }

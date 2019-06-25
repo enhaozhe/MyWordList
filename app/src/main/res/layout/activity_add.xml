@@ -24,8 +24,8 @@
         android:layout_gravity="center_horizontal"
         android:onClick="GetDefinition"
         android:padding="16dp"
-        android:backgroundTint="#E25183"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#FFFFFF"
+        android:enabled="false"/>
 
     <EditText
         android:id="@+id/def_et"

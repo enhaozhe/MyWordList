@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,10 +71,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             if(mainActivity.getStatus()){
                 mainActivity.preDelete(v, position);
             }else{
-                //Todo: Open the card view
                 if(!mainActivity.getViewModeStatus()) {
-                    mainActivity.viewMode();
-                    Toast.makeText(mainActivity, "Enter Edit Mode!", Toast.LENGTH_SHORT).show();
+                    mainActivity.viewMode(position);
+                    Toast.makeText(mainActivity, "Enter View Mode!", Toast.LENGTH_SHORT).show();
                 }else{
                     mainActivity.quitViewMode();
                 }

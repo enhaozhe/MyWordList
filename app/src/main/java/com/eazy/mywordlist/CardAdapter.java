@@ -51,4 +51,13 @@ public class CardAdapter extends PagerAdapter {
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View)object);
     }
+
+    public List<Word> getmList() {
+        return mList;
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return mList.indexOf(object);
+    }
 }
