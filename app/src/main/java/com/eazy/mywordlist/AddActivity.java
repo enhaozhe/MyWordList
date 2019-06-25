@@ -110,7 +110,7 @@ public class AddActivity extends AppCompatActivity {
 
     private String dictionaryEntries() {
         final String input = autoCompleteTextView.getText().toString();
-        final String fields = "definitions";
+        final String fields = "pronunciations";
         final String language = "en-us";
         final String strictMatch = "false";
         final String word_id = input.toLowerCase();

@@ -62,36 +62,28 @@ public class MyDictionaryRequest extends AsyncTask<String, Integer, String> {
         super.onPostExecute(result);
 
         String def;
-        String audioFile;
 
             try {
-                JSONObject resultObejct = new JSONObject(result);
-                JSONArray resultsArray = resultObejct.getJSONArray("results");
+                //Todo: Add more information like examples, pronunciations.
+                JSONObject resultObject = new JSONObject(result);
+                JSONArray resultsArray = resultObject.getJSONArray("results");
 
-                JSONObject lexicalObejct = resultsArray.getJSONObject(0);
-                JSONArray lexicalArray = lexicalObejct.getJSONArray("lexicalEntries");
+                JSONObject lexicalObject = resultsArray.getJSONObject(0);
+                JSONArray lexicalArray = lexicalObject.getJSONArray("lexicalEntries");
 
-                JSONObject entriesObejct = lexicalArray.getJSONObject(0);
-                JSONArray entriesArray = entriesObejct.getJSONArray("entries");
+                JSONObject entriesObject = lexicalArray.getJSONObject(0);
+                JSONArray entriesArray = entriesObject.getJSONArray("entries");
 
-                JSONObject sensesObejct = entriesArray.getJSONObject(0);
-                JSONArray sensesArray = sensesObejct.getJSONArray("senses");
+                JSONObject sensesObject = entriesArray.getJSONObject(0);
+                JSONArray sensesArray = sensesObject.getJSONArray("senses");
 
-                JSONArray pronunciationsArray = entriesObejct.getJSONArray("pronunciations");
-
-                JSONObject audioObject = pronunciationsArray.getJSONObject(0);
-                JSONArray audioArray = audioObject.getJSONArray("phoneticSpelling");
-
-                audioFile = audioArray.getString(0);
-                audio_tv.setText(audioFile);
-/*/
-                JSONObject definitionObejct = sensesArray.getJSONObject(0);
-                JSONArray definitionArray = definitionObejct.getJSONArray("definitions");
+                JSONObject definitionObject = sensesArray.getJSONObject(0);
+                JSONArray definitionArray = definitionObject.getJSONArray("definitions");
 
                 def = definitionArray.getString(0);
 
                 def_tv.setText(def);
-                Log.d("TAG...Definition is ", def);*/
+                Log.d("TAG...Definition is ", def);
 
             } catch (JSONException ex) {
                 Toast.makeText(context, "Please check your spelling or Internet Connection!", Toast.LENGTH_SHORT).show();
