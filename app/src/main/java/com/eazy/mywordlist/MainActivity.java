@@ -80,20 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             knownList.add(new Word(data.getString(0), data.getString(1)));
         }
 
-        bundle_new = new Bundle();
-        bundle_new.putSerializable("getNewList", (Serializable) newList);
-        newFragment = new newFragment();
-        newFragment.setArguments(bundle_new);
-
-        bundle_fam = new Bundle();
-        bundle_fam.putSerializable("getFamList", (Serializable)famList);
-        famFragment = new famFragment();
-        famFragment.setArguments(bundle_fam);
-
-        bundle_known = new Bundle();
-        bundle_known.putSerializable("getKnownList", (Serializable)knownList);
-        knownFragment = new knownFragment();
-        knownFragment.setArguments(bundle_known);
+        createFragments();
 
         view_mode_status = false;
         edit_mode_status = false;
@@ -105,28 +92,8 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         tabLayout.setupWithViewPager(viewPager);
         //set icons of tabs
         tabsIcon();
-        //Todo: Tab is changing when get into view mode.
-        selectedListener = new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if(!view_mode_status || adapter_card==null) {
-                    currentTab = tab.getPosition();
-                }
-                Log.d("TAG tab changed", String.valueOf(itab));
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        };
-
-        tabLayout.addOnTabSelectedListener(selectedListener);
+        //tabLayout.addOnTabSelectedListener(selectedListener);
         //if received from add Activity, create card adapter and scroll to relating position
         Intent in = getIntent();
        // Word received = in.getParcelableExtra("edit mode");
@@ -141,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
             TabLayout.Tab t = tabLayout.getTabAt(itemLocation[0]);
             t.select();
-            //Todo: get correct tab
             viewMode(itemLocation[1]);
         }else{
             currentTab = 0;
@@ -192,6 +158,8 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
                     famList.remove(w);
                     knownList.remove(w);
                     newFragment.preDelete(w);
+                    famFragment.preDelete(w);
+                    knownFragment.preDelete(w);
                 }
                 quitDeleteMode();
                 Toast.makeText(this, "Delete!", Toast.LENGTH_SHORT).show();
@@ -223,8 +191,16 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         toolbar.inflateMenu(R.menu.add_button);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ViewGroup viewGroup = findViewById(R.id.recyclerView);
+        ViewGroup v_fam = findViewById(R.id.recyclerView_fam);
+        ViewGroup v_known = findViewById(R.id.recyclerView_fam);
         for(int i = 0; i < viewGroup.getChildCount(); i++) {
             viewGroup.getChildAt(i).setBackgroundColor(android.R.drawable.btn_default);  //set all the children to default background color.
+        }
+        for(int i = 0; i < v_fam.getChildCount(); i++) {
+            v_fam.getChildAt(i).setBackgroundColor(android.R.drawable.btn_default);  //set all the children to default background color.
+        }
+        for(int i = 0; i < v_known.getChildCount(); i++) {
+            v_known.getChildAt(i).setBackgroundColor(android.R.drawable.btn_default);  //set all the children to default background color.
         }
         tabsIcon();
     }
@@ -271,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     }
 
     public void viewMode(int position){
-        itab = currentTab;
+        itab = tabLayout.getSelectedTabPosition();
         List<Word> mList = getList(tabLayout.getSelectedTabPosition());
         adapter_card = new CardAdapter(mList, getApplicationContext());
         viewPager.setAdapter(adapter_card);
@@ -279,7 +255,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         view_mode_status = true;
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.edit_mode);
-        tabLayout.clearOnTabSelectedListeners();
         viewPager.setCurrentItem(position, true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -291,7 +266,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         view_mode_status = false;
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.add_button);
-        tabLayout.setOnTabSelectedListener(selectedListener);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         tabsIcon();
     }
@@ -303,9 +277,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         Word word = adapter_card.getmList().get(viewPager.getCurrentItem());
         String[] l = {word.getWord(), word.getDef()};
         intent.putExtra("secret code", l);
-        itemLocation = new int[2];
-        itemLocation[0] = itab;
-        itemLocation[1] = viewPager.getCurrentItem();
+        itemLocation = new int[]{itab, viewPager.getCurrentItem()};
         Log.d("TAG Ori tab Location", String.valueOf(itemLocation[0]));
         Log.d("TAG Ori list Location", String.valueOf(itemLocation[1]));
         intent.putExtra("item location", itemLocation);
@@ -344,7 +316,27 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
     public void tabsIcon(){
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_new_word);
+        tabLayout.getTabAt(0).setText("Don't Know");
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_fam_word);
+        tabLayout.getTabAt(1).setText("Almost");
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_knwon_word);
+        tabLayout.getTabAt(2).setText("Know");
+    }
+
+    public void createFragments(){
+        bundle_new = new Bundle();
+        bundle_new.putSerializable("getNewList", (Serializable) newList);
+        newFragment = new newFragment();
+        newFragment.setArguments(bundle_new);
+
+        bundle_fam = new Bundle();
+        bundle_fam.putSerializable("getFamList", (Serializable)famList);
+        famFragment = new famFragment();
+        famFragment.setArguments(bundle_fam);
+
+        bundle_known = new Bundle();
+        bundle_known.putSerializable("getKnownList", (Serializable)knownList);
+        knownFragment = new knownFragment();
+        knownFragment.setArguments(bundle_known);
     }
 }
