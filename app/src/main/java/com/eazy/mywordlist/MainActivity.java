@@ -1,24 +1,17 @@
 package com.eazy.mywordlist;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     private CardAdapter adapter_card;
     private int[] itemLocation;
     private int currentTab;
+    private TabLayout.OnTabSelectedListener selectedListener;
+    int itab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,13 +106,13 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         //set icons of tabs
         tabsIcon();
         //Todo: Tab is changing when get into view mode.
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        selectedListener = new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(!view_mode_status) {
+                if(!view_mode_status || adapter_card==null) {
                     currentTab = tab.getPosition();
                 }
-                Log.d("TAG tab changed", String.valueOf(currentTab));
+                Log.d("TAG tab changed", String.valueOf(itab));
             }
 
             @Override
@@ -129,7 +124,9 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });
+        };
+
+        tabLayout.addOnTabSelectedListener(selectedListener);
         //if received from add Activity, create card adapter and scroll to relating position
         Intent in = getIntent();
        // Word received = in.getParcelableExtra("edit mode");
@@ -150,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             currentTab = 0;
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -273,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     }
 
     public void viewMode(int position){
+        itab = currentTab;
         List<Word> mList = getList(tabLayout.getSelectedTabPosition());
         adapter_card = new CardAdapter(mList, getApplicationContext());
         viewPager.setAdapter(adapter_card);
@@ -280,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         view_mode_status = true;
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.edit_mode);
+        tabLayout.clearOnTabSelectedListeners();
         viewPager.setCurrentItem(position, true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -291,6 +291,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         view_mode_status = false;
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.add_button);
+        tabLayout.setOnTabSelectedListener(selectedListener);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         tabsIcon();
     }
@@ -303,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         String[] l = {word.getWord(), word.getDef()};
         intent.putExtra("secret code", l);
         itemLocation = new int[2];
-        itemLocation[0] = currentTab;
+        itemLocation[0] = itab;
         itemLocation[1] = viewPager.getCurrentItem();
         Log.d("TAG Ori tab Location", String.valueOf(itemLocation[0]));
         Log.d("TAG Ori list Location", String.valueOf(itemLocation[1]));
