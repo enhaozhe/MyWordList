@@ -82,10 +82,9 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
         createFragments();
 
-        
         //set icons of tabs
         tabsSetUp();
-        //tabLayout.addOnTabSelectedListener(selectedListener);
+
         //if received from add Activity, create card adapter and scroll to relating position
         Intent in = getIntent();
        // Word received = in.getParcelableExtra("edit mode");
@@ -349,10 +348,9 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         getList(target).add(word);
         notifyLists(tabLayout.getSelectedTabPosition());
         notifyLists(target);
-        adapter.notifyDataSetChanged();
         tabsSetUp();
         Log.d("TAG Current tab", String.valueOf(currentTab));
-        TabLayout.Tab t = tabLayout.getTabAt(itab);
+        TabLayout.Tab t = tabLayout.getTabAt(currentTab);
         t.select();
         viewPager.setCurrentItem(getNewItem(i));
     }
