@@ -2,6 +2,7 @@ package com.eazy.mywordlist;
 
 import android.R.layout;
 import android.content.Context;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -50,21 +53,18 @@ public class CardAdapter extends PagerAdapter implements AdapterView.OnItemSelec
         layoutInflater = LayoutInflater.from(context);
         View v = layoutInflater.inflate(R.layout.word_card, container, false);
 
-        TextView  word = v.findViewById(R.id.word_title);
-        TextView def = v.findViewById(R.id.card_def);
-       // spinner = v.findViewById(R.id.spinner_card);
+        final TextView  word = v.findViewById(R.id.word_title);
+        final TextView def = v.findViewById(R.id.card_def);
+        ImageButton button = v.findViewById(R.id.card_edit_bt);
 
         word.setText(mList.get(position).getWord());
         def.setText(mList.get(position).getDef());
-
-       /* spinner.setOnItemSelectedListener(this);
-        sList = new ArrayList<>();
-        setSpinnerList();
-
-        ArrayAdapter<String > arrayAdapter = new ArrayAdapter<String>(context, layout.simple_spinner_dropdown_item, sList);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(arrayAdapter);*/
-
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity.editMode(new Word(word.getText().toString(), def.getText().toString()));
+            }
+        });
         container.addView(v, 0);
         return v;
     }
@@ -85,7 +85,6 @@ public class CardAdapter extends PagerAdapter implements AdapterView.OnItemSelec
         return mList.indexOf(object);
     }
 
-    //Todo: Add functions to spinner's drop down menu
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(flag < mList.size()){
@@ -119,24 +118,5 @@ public class CardAdapter extends PagerAdapter implements AdapterView.OnItemSelec
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         return;
-    }
-
-    public void setSpinnerList(){
-        switch (currentList){
-            case 0:
-                sList.add("Move to ALMOST KNOW list");
-                sList.add("Move to KNOW list");
-                return;
-            case 1:
-                sList.add("Move to DON'T KNOW list");
-                sList.add("Move to KNOW list");
-                return;
-            case 2:
-                sList.add("Move to DON'T KNOW list");
-                sList.add("Move to ALMOST KNOW list");
-                return;
-            default:
-                return;
-        }
     }
 }

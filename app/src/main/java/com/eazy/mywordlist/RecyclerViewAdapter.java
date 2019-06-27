@@ -41,6 +41,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         myViewHolder.word.setText(wordList.get(i).getWord());
         myViewHolder.def.setText(wordList.get(i).getDef());
+        if(mainActivity.isDelete_mode_status()){
+            myViewHolder.itemView.setBackgroundColor(android.R.drawable.btn_default);
+        }
     }
 
     @Override
@@ -81,12 +84,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             if(mainActivity.getStatus()){
                 mainActivity.preDelete(v, position);
             }else{
-                if(!mainActivity.getViewModeStatus()) {
-                    mainActivity.viewMode(position);
-                    Toast.makeText(mainActivity, "Enter View Mode!", Toast.LENGTH_SHORT).show();
-                }else{
-                    mainActivity.quitViewMode();
-                }
+                mainActivity.viewMode(position);
+                Toast.makeText(mainActivity, "Enter View Mode!", Toast.LENGTH_SHORT).show();
+
             }
         }
     }
