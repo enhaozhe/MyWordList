@@ -56,5 +56,17 @@ public class newFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
-    //Todo: remove and add methods for moving words around
+    public void addWord(Word word){
+        mList.add(word);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void removeWord(Word word){
+        mList.remove(word);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void notifyData(){
+        mAdapter.notifyDataSetChanged();
+    }
 }

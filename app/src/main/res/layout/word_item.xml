@@ -19,9 +19,16 @@
 
     <TextView
         android:id="@+id/def_tv"
-        android:layout_width="match_parent"
+        android:layout_width="230dp"
         android:layout_height="match_parent"
         android:gravity="center"
         android:padding="8dp" />
+
+    <ImageButton
+        android:id="@+id/switch_button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_switch_button"
+        android:backgroundTint= "#00FAF5F5"/>
 
 </LinearLayout>

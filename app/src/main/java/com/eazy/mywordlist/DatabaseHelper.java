@@ -95,7 +95,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL0, word.getWord());
         contentValues.put(COL1, word.getDef());
         contentValues.put(COL2, newIdx);
-        db.update(TABLE_NAME, contentValues, COL0 + " = "+ word.getWord(),null);
+        db.update(TABLE_NAME, contentValues, COL0 + " = ?", new String[]{word.getWord()});
 
     }
 }

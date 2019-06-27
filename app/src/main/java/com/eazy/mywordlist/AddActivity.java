@@ -113,7 +113,7 @@ public class AddActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
+    //Todo: Make the input section rounder
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

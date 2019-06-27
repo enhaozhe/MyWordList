@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,13 +54,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView def;
         private LinearLayout linearLayout;
         private MainActivity mainActivity;
+        private ImageButton button;
 
-        public MyViewHolder(@NonNull View itemView, MainActivity mainActivity) {
+        public MyViewHolder(@NonNull View itemView, final MainActivity mainActivity) {
             super(itemView);
 
             this.mainActivity = mainActivity;
             word = itemView.findViewById(R.id.word_tv);
             def = itemView.findViewById(R.id.def_tv);
+            button = itemView.findViewById(R.id.switch_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainActivity.showAlertDialog(new Word(word.getText().toString(), def.getText().toString()));
+                }
+            });
             linearLayout = itemView.findViewById(R.id.word_view);
             linearLayout.setOnLongClickListener(mainActivity);
             linearLayout.setOnClickListener(this);

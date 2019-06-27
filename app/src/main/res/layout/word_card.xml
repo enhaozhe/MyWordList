@@ -28,59 +28,57 @@
                 android:layout_height="wrap_content"
                 android:background="#B9B5B5">
 
-                <Spinner
-                    android:id="@+id/spinner_card"
-                    android:layout_width="36sp"
+
+                <TextView
+                    android:id="@+id/word_title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="277dp"
-                    android:layout_marginEnd="70dp"
+                    android:layout_below="@+id/switch_layout"
+                    android:gravity="center_horizontal"
+                    android:padding="8dp"
+                    android:text="Word"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-              <!--  <ImageButton
-                    android:id="@+id/switch_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="278dp"
-                    android:layout_marginEnd="70dp"
-                    android:backgroundTint="#B9B5B5"
-                    android:src="@drawable/ic_switch_button"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    />   -->
+                <!--
+                                <Spinner
+                                    android:id="@+id/spinner_card"
+                                    android:layout_width="36sp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="277dp"
+                                    android:layout_marginEnd="70dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageButton
+                                    android:id="@+id/switch_button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginStart="278dp"
+                                    android:layout_marginEnd="70dp"
+                                    android:backgroundTint="#B9B5B5"
+                                    android:src="@drawable/ic_switch_button"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_bias="0.0"
+                                    />   -->
 
             </android.support.constraint.ConstraintLayout>
-
-
-            <TextView
-                android:id="@+id/word_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/switch_layout"
-                android:gravity="center_horizontal"
-                android:padding="8dp"
-                android:text="Word"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/word_title"
-                android:background="#000000"></View>
 
             <TextView
                 android:id="@+id/card_def_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/line"
+                android:layout_below="@+id/switch_layout"
                 android:text="Definition: "
                 android:textSize="18sp"
                 android:textStyle="bold"

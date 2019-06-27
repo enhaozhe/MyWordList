@@ -11,4 +11,8 @@
     <string name="delete_menu_bt">Delete</string>
     <string name="nums_items_selected">0 items selected</string>
     <string name="close_card">Close Card</string>
+    <string name="move_bt_new">New</string>
+    <string name="move_bt_almost">Almost</string>
+    <string name="move_bt_know">Know</string>
+    <string name="move_cencel_bt">Cancel</string>
 </resources>

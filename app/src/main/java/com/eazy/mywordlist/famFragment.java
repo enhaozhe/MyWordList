@@ -55,4 +55,17 @@ public class famFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
+    public void addWord(Word word){
+        mList.add(word);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void removeWord(Word word){
+        mList.remove(word);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void notifyData(){
+        mAdapter.notifyDataSetChanged();
+    }
 }
