@@ -28,7 +28,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnLongClickListener{
 
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String LOG_TAG = "TAG";
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private PagerAdapter adapter;
@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         }else{
             currentTab = 0;
         }
+
     }
 
 
@@ -350,8 +351,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         notifyLists(target);
         tabsSetUp();
         Log.d("TAG Current tab", String.valueOf(currentTab));
-        TabLayout.Tab t = tabLayout.getTabAt(currentTab);
-        t.select();
         viewPager.setCurrentItem(getNewItem(i));
     }
 
@@ -382,7 +381,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         return itab;
     }
 
-    //Todo: change view mode to Dialog.
     public void showAlertDialog(final Word word) {
         final Dialog alert = new Dialog(this);
         View v = getLayoutInflater().inflate(R.layout.move_layout, null);
@@ -455,4 +453,5 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     public boolean isDelete_mode_status() {
         return delete_mode_status;
     }
+
 }

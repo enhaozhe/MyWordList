@@ -61,25 +61,44 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/card_def_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/switch_layout"
-                android:paddingLeft="16dp"
-                android:text="Definition: "
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/card_def"
+            <ScrollView
+                android:id="@+id/scrollView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/card_def_tv"
-                android:inputType="textMultiLine"
-                android:paddingLeft="16sp"
-                android:text="Meaning of the word"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:layout_below="@id/switch_layout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/card_def_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/switch_layout"
+                        android:paddingLeft="16dp"
+                        android:text="Definition: "
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"/>
+
+                    <TextView
+                        android:id="@+id/card_def"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/card_def_tv"
+                        android:inputType="textMultiLine"
+                        android:paddingLeft="16sp"
+                        android:text="Meaning of the word"
+                        android:textSize="18sp"
+                        android:textFontWeight="0.2"/>
+
+                </LinearLayout>
+            </ScrollView>
+
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

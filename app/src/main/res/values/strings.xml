@@ -15,4 +15,5 @@
     <string name="move_bt_almost">Almost</string>
     <string name="move_bt_know">Know</string>
     <string name="move_cencel_bt">Cancel</string>
+    <string name="search_bt">search</string>
 </resources>
