@@ -3,14 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/info_button"
+        android:icon="@drawable/ic_info_button"
+        app:showAsAction="ifRoom"
+        android:title="@string/about" />
+
+    <item
         android:id="@+id/delete_button"
         android:icon="@drawable/ic_delete_button"
         android:title="@string/delete_menu_bt"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/add_button"
         android:icon="@drawable/ic_add_button"
         android:title="@string/menu_add"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
 </menu>

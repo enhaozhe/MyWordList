@@ -45,7 +45,6 @@ public class knownFragment extends Fragment {
             mList = (List<Word>) getArguments().getSerializable("getKnownList");
         }else{
             mList = new ArrayList<>();
-            Log.d("Failed", "gg");
         }
 
     }

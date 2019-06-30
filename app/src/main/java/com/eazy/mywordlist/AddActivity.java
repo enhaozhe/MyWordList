@@ -32,10 +32,6 @@ public class AddActivity extends AppCompatActivity {
     private boolean edit_mode;
     private MainActivity mainActivity;
     private int[] itemLocation;
-    //private String[] transList;
-    //private Spinner spinner;
-    //private Button translate;
-    //private Map<String, String> lanMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +44,7 @@ public class AddActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         title = findViewById(R.id.num_selected_tv);
-        title.setText("Add New Word");
+        title.setText(getResources().getText(R.string.Add_title));
 
         mDatabaseHelper = new DatabaseHelper(this);
 
@@ -66,7 +62,7 @@ public class AddActivity extends AppCompatActivity {
             edit_mode = true;
             autoCompleteTextView.setText(s[0]);
             def_tv.setText(s[1]);
-            title.setText("Edit");
+            title.setText(getResources().getText(R.string.edit_title));
         }
     }
 
@@ -98,22 +94,22 @@ public class AddActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.add_done, menu);
-
         return true;
     }
 
     @Override
     public void onBackPressed() {
         if (edit_mode) {
+            edit_mode = false;
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("edit mode", true);
-            edit_mode = false;
+            intent.putExtra("back item location", itemLocation);
             startActivity(intent);
         } else {
             super.onBackPressed();
         }
     }
-    //Todo: Make the input section rounder
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -125,16 +121,25 @@ public class AddActivity extends AppCompatActivity {
                 if(edit_mode){
                     intent.putExtra("edit mode", true);
                     intent.putExtra("back item location", itemLocation);
-                    Log.d("TAG add tab Location", String.valueOf(itemLocation[0]));
-                    Log.d("TAG add list Location", String.valueOf(itemLocation[1]));
 
                 }
                 edit_mode = false;
                 startActivity(intent);
                 return true;
+            case android.R.id.home:
+                Intent in = new Intent(this, MainActivity.class);
+                if(edit_mode){
+                    in.putExtra("edit mode", true);
+                    in.putExtra("back item location", itemLocation);
+                }
+                edit_mode = false;
+                startActivity(in);
+                return true;
         }
         return false;
     }
+
+
 
     public void AddData(String word, String def){
         int result;
@@ -146,8 +151,6 @@ public class AddActivity extends AppCompatActivity {
         }
         if(result == 0){
             Toast.makeText(this, "Word is added successfully!", Toast.LENGTH_SHORT).show();
-        }else if(result == -2){
-            Toast.makeText(this, "Adding word failed!", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(this, "This Word Already Existed!", Toast.LENGTH_SHORT).show();
         }
@@ -165,10 +168,8 @@ public class AddActivity extends AppCompatActivity {
 
     public void GetDefinition(View view) {
         myUrl = dictionaryEntries();
-        Log.d("TAG... Get definition: ", myUrl);
 
         MyDictionaryRequest myDictionaryRequest = new MyDictionaryRequest(this, def_tv);
         myDictionaryRequest.execute(myUrl);
-        Log.d("TAG... Get definition: ", "Succeed!");
     }
 }

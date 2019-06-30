@@ -18,9 +18,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MyDictionaryRequest extends AsyncTask<String, Integer, String> {
 
-    Context context;
+    private Context context;
     private EditText def_tv;
-    private EditText audio_tv;
 
     MyDictionaryRequest(Context context, EditText de){
         this.context = context;
@@ -64,7 +63,6 @@ public class MyDictionaryRequest extends AsyncTask<String, Integer, String> {
         String def;
 
             try {
-                //Todo: Add more information like examples, pronunciations.
                 JSONObject resultObject = new JSONObject(result);
                 JSONArray resultsArray = resultObject.getJSONArray("results");
 
@@ -83,12 +81,9 @@ public class MyDictionaryRequest extends AsyncTask<String, Integer, String> {
                 def = definitionArray.getString(0);
 
                 def_tv.setText(def);
-                Log.d("TAG...Definition is ", def);
 
             } catch (JSONException ex) {
                 Toast.makeText(context, "Please check your spelling or Internet Connection!", Toast.LENGTH_SHORT).show();
-                Log.d("TAG...Error: ", result);
-
             }
     }
 }

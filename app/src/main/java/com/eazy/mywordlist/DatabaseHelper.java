@@ -5,11 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -20,50 +15,47 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL1 = "Definition";
     private static final String COL2 = "LIST";
 
-    public DatabaseHelper(Context context) {
-        super(context, TABLE_NAME, null, 1);
+    DatabaseHelper(Context context) {
+        super(context, TABLE_NAME, null, 3);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE " + TABLE_NAME + " (Word TEXT PRIMARY KEY," + COL1 + " TEXT, " + COL2 + " INTEGER)";
+        String createTable = "CREATE TABLE  IF NOT EXISTS " + TABLE_NAME  + "(" + COL0 + " TEXT PRIMARY KEY," + COL1 + " TEXT, " + COL2 + " INTEGER)";
         db.execSQL(createTable);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       // db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+    public void onOpen(SQLiteDatabase db) {
         onCreate(db);
     }
 
-    public int addData(String word, String def, int idx){
-        SQLiteDatabase db = this.getWritableDatabase();
-/*
-        String Query = "Select * from " + TABLE_NAME + " where " + COL0 + " = " + word;
-        Cursor cursor = db.rawQuery(Query, null);
-        if(cursor.getCount() <= 0){
-            cursor.close();
-            return -1;
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if(newVersion>oldVersion) {
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+            onCreate(db);
         }
-        cursor.close();*/
+    }
+
+    int addData(String word, String def, int idx){
+        SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL0, word);
         contentValues.put(COL1, def);
         contentValues.put(COL2, idx);
 
-        Log.d(TAG,"Add Data : " + word + " meaning: " + def);
-
         long result = db.insert(TABLE_NAME, null, contentValues);
 
         if(result == -1 ){
-            return -2;
+            return -1;
         }else{
             return 0;
         }
     }
 
-    public int updateData(Word word){
+    int updateData(Word word){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COL0, word.getWord());
@@ -71,25 +63,23 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return db.update(TABLE_NAME, cv,  COL0 + " = ?", new String[]{word.getWord()});
     }
 
-    public void deleteData(Word word){
+    void deleteData(Word word){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COL0 + " = " + "'" + word.getWord() + "'");
     }
 
-    public Cursor getData(int idx){
+    Cursor getData(int idx){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL2 + " = " + idx;
-        Cursor data = db.rawQuery(query, null);
-        return data;
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL2.trim() + " = " + idx;
+        return db.rawQuery(query, null);
     }
 
     public void deleteTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE " + TABLE_NAME);
-        Log.d("Delete table: ", "succeed");
     }
 
-    public void switchList(Word word, int newIdx){
+    void switchList(Word word, int newIdx){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL0, word.getWord());

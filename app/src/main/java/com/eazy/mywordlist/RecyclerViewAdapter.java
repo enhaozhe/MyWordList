@@ -1,20 +1,14 @@
 package com.eazy.mywordlist;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
@@ -23,7 +17,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context mContext;
     private MainActivity mainActivity;
 
-    public RecyclerViewAdapter(List<Word> wordList, Context mContext, MainActivity mainActivity) {
+    RecyclerViewAdapter(List<Word> wordList, Context mContext, MainActivity mainActivity) {
         this.wordList = wordList;
         this.mContext = mContext;
         this.mainActivity = mainActivity;
@@ -33,8 +27,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.word_item, viewGroup, false);
-        MyViewHolder vHolder = new MyViewHolder(v, mainActivity);
-        return vHolder;
+        return new MyViewHolder(v, mainActivity);
     }
 
     @Override
@@ -59,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private MainActivity mainActivity;
         private ImageButton button;
 
-        public MyViewHolder(@NonNull View itemView, final MainActivity mainActivity) {
+        MyViewHolder(@NonNull View itemView, final MainActivity mainActivity) {
             super(itemView);
 
             this.mainActivity = mainActivity;
@@ -85,8 +78,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 mainActivity.preDelete(v, position);
             }else{
                 mainActivity.viewMode(position);
-                Toast.makeText(mainActivity, "Enter View Mode!", Toast.LENGTH_SHORT).show();
-
             }
         }
     }

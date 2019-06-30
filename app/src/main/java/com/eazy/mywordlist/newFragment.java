@@ -46,7 +46,6 @@ public class newFragment extends Fragment {
             mList = (List<Word>) getArguments().getSerializable("getNewList");
         }else{
             mList = new ArrayList<>();
-            Log.d("Failed", "gg");
         }
 
     }

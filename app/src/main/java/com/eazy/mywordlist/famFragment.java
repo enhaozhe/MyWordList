@@ -45,7 +45,6 @@ public class famFragment extends Fragment {
             mList = (List<Word>) getArguments().getSerializable("getFamList");
         }else{
             mList = new ArrayList<>();
-            Log.d("Failed", "gg");
         }
 
     }

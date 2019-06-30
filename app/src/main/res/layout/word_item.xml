@@ -21,6 +21,7 @@
         android:id="@+id/def_tv"
         android:layout_width="230dp"
         android:layout_height="match_parent"
+        android:maxLines="2"
         android:gravity="center"
         android:padding="8dp" />
 
@@ -29,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/ic_switch_button"
-        android:backgroundTint= "#00FAF5F5"/>
+        android:backgroundTint= "#00FAF5F5"
+        android:contentDescription="@string/move_button_des" />
 
 </LinearLayout>

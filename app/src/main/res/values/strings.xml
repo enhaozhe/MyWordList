@@ -16,4 +16,16 @@
     <string name="move_bt_know">Know</string>
     <string name="move_cencel_bt">Cancel</string>
     <string name="search_bt">search</string>
+    <string name="card_definition">Definition:</string>
+    <string name="edit_image_text">edit button</string>
+    <string name="word_title">Word</string>
+    <string name="card_def">Meaning of the word</string>
+    <string name="about">About</string>
+    <string name="about_app">My Word List - Vocabulary Builder is an app that helps you to learn English. There are three lists, Don\'t Know, Almost Know, Know, which provides you a style to sort your words and improve your vocabulary.</string>
+    <string name="appicon">AppIcon</string>
+    <string name="move_button_des">move word to other list</string>
+    <string name="power_by_oxford">Power by Oxford</string>
+    <string name="Add_title">Add New Word</string>
+    <string name="edit_title">Edit</string>
+    <string name="title">My Word List</string>
 </resources>
