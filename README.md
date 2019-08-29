@@ -6,4 +6,18 @@
 My Word List - Vocabulary Builder is an app that helps you master vocabulary step by step, starting from DON'T KNOW, ALMOST KNOW to KNOW, you can keep track of your learning process.
 
 
-![](images/FetureGraphic.png)
+**Feature Graphic**
+
+ <br/> 
+ 
+![](images/FeatureGraphic.png)
+
+ <br/> 
+ 
+**Screenshots**
+
+ <br/> 
+ 
+  Start Page             |  Add Page        |   View Page
+:-------------------------:|:-------------------------:|:-------------------------:
+![](images/Start.png) | ![](images/Add.png) | ![](images/View.png)
